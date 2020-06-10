@@ -25,7 +25,14 @@
               >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn class="ma-2" tile large color="red" icon>
+              <v-btn
+                class="ma-2"
+                tile
+                large
+                color="red"
+                icon
+                @click="deleteUser(employee._id)"
+              >
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-card-actions>
@@ -215,6 +222,13 @@ export default {
         this.userForm.content = { ...this.defaultContent }
         this.userForm.index = -1
       }, 300)
+    },
+    async deleteUser (_id) {
+      await this.$store.dispatch('deleteUser', {
+        value: {
+          _id
+        }
+      })
     }
   }
 }

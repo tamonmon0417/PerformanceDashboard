@@ -44,7 +44,7 @@ export default {
     }
   },
 
-  async deleteUser ({ state, dispatch }, { value }) {
+  async deleteUser ({ dispatch }, { value }) {
     const { _id } = value
     await axios.delete(`http://localhost:3000/user/${_id}`)
     await dispatch('getAllUser')
