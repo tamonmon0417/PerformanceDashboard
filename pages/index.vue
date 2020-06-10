@@ -55,11 +55,11 @@
                 outlined
               />
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <v-col v-if="otherEmployeeNameList.length" cols="12" sm="6" md="6">
               <label>Assigned Members</label>
               <v-select
                 v-model="userForm.content.assignedList"
-                :items="employeeNameList"
+                :items="otherEmployeeNameList"
                 item-text="name"
                 return-object
                 chips
@@ -84,7 +84,6 @@
                       v-model="performance.score"
                       class="mt-5"
                       dense
-                      solo
                     />
                   </td>
                   <td>
@@ -92,7 +91,6 @@
                       v-model="performance.feedback"
                       class="mt-5"
                       dense
-                      solo
                     />
                   </td>
                 </tr>
@@ -154,6 +152,7 @@ export default {
     ],
     userForm: {
       content: {
+        _id: null,
         name: null,
         type: null,
         performanceList: [], // includes score and feedback
@@ -165,24 +164,13 @@ export default {
       score: null,
       feedback: null
     },
-    dialog: false
+    dialog: false,
+    otherEmployeeNameList: []
   }),
   computed: {
     employeeList () {
       // TODO only employee
       return this.$store.state.users
-    },
-    employeeNameList () {
-      if (!this.isLoaded) { return }
-      // TODO only employee
-      const tmp = []
-      this.$store.state.users.forEach((user) => {
-        tmp.push({
-          name: user.name,
-          _id: user._id
-        })
-      })
-      return tmp
     },
     hasEmployee () {
       return this.employeeList.length
@@ -201,11 +189,24 @@ export default {
     this.isLoaded = true
   },
   methods: {
+    updateOtherEmployeeNameList (_id) {
+      const tmp = []
+      this.$store.state.users.forEach((user) => {
+        if (user._id !== _id) {
+          tmp.push({
+            name: user.name,
+            _id: user._id
+          })
+        }
+      })
+      this.otherEmployeeNameList = tmp
+    },
     addPerformance () {
       this.userForm.content.performanceList.push(JSON.parse(JSON.stringify(this.performance)))
     },
     dialogTrigger (employee) {
       this.userForm.content = JSON.parse(JSON.stringify(employee))
+      this.updateOtherEmployeeNameList(this.userForm.content._id)
       this.dialog = true
     },
     async save () {
