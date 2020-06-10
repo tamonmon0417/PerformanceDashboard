@@ -4,8 +4,13 @@ export default () => {
       {
         name: null,
         type: null,
-        performanceList: null, // includes score and feedback
-        assignedList: null
+        performanceList: [
+          {
+            score: null,
+            feedback: null
+          }
+        ],
+        assignedList: []
       }
     ]
   }

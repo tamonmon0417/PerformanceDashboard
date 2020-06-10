@@ -165,7 +165,7 @@ export default {
       content: {
         _id: null,
         name: null,
-        type: null,
+        type: 'employee',
         performanceList: [
           {
             score: null,
@@ -193,13 +193,13 @@ export default {
     defaultContent () {
       return {
         name: null,
-        type: null,
+        type: 'employee',
         performanceList: [
           {
             score: null,
             feedback: null
           }
-        ], // includes score and feedback
+        ],
         assignedList: []
       }
     }
