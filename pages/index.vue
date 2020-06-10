@@ -62,21 +62,48 @@
               />
             </v-col>
           </v-row>
-          <v-row class="scoped-text-field">
-            <v-col cols="4">
-              <label>score</label>
-              <span
-                v-for="(performance, index) in userForm.content.performanceList"
-                :key="index"
-              >
-                <v-text-field
-                  v-model="performance.score"
-                  dense
-                  outlined
-                />
-              </span>
-            </v-col>
-          </v-row>
+          <v-data-table
+            :headers="headers"
+            hide-default-footer
+          >
+            <template v-slot:body>
+              <tbody>
+                <tr
+                  v-for="(performance, index) in userForm.content.performanceList"
+                  :key="index"
+                >
+                  <td>
+                    <v-text-field
+                      v-model="performance.score"
+                      class="mt-5"
+                      dense
+                      solo
+                    />
+                  </td>
+                  <td>
+                    <v-text-field
+                      v-model="performance.feedback"
+                      class="mt-5"
+                      dense
+                      solo
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-data-table>
+          <div class="flex-grow-1" />
+          <v-btn
+            class="mr-1"
+            color="blue"
+            dark
+            fab
+            @click="addPerformance()"
+          >
+            <v-icon>
+              mdi-plus
+            </v-icon>
+          </v-btn>
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1" />
@@ -127,6 +154,10 @@ export default {
       },
       index: -1
     },
+    performance: {
+      score: null,
+      feedback: null
+    },
     dialog: false
   }),
   computed: {
@@ -163,6 +194,9 @@ export default {
     this.isLoaded = true
   },
   methods: {
+    addPerformance () {
+      this.userForm.content.performanceList.push(JSON.parse(JSON.stringify(this.performance)))
+    },
     dialogTrigger (employee) {
       this.userForm.content = JSON.parse(JSON.stringify(employee))
       this.dialog = true
