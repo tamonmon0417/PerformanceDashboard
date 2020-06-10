@@ -2,10 +2,19 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const mongoose = require('mongoose')
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
+
+mongoose.connect('mongodb://localhost:27017/user', { useNewUrlParser: true })
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'DB connection error:'))
+db.once('open', () => console.log('DB connection successful'))
+
+const userRouter = require('./routes/user')
+app.use('/user', userRouter)
 
 async function start () {
   // Init Nuxt.js

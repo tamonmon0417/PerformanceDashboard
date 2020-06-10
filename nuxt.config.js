@@ -55,6 +55,25 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    host: 'localhost',
+    port: 3000
+  },
+  auth: {
+    redirect: {
+      login: '/login', // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: '/login', // ログアウト時のリダイレクトURL
+      callback: false, // Oauth認証等で必要となる コールバックルート
+      home: '/' // ログイン後のリダイレクトURL
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'api/login', method: 'post', propertyName: 'token' },
+          user: { url: 'api/me', method: 'get', propertyName: false },
+          logout: false
+        }
+      }
+    }
   },
   /*
   ** vuetify module configuration
@@ -63,7 +82,7 @@ module.exports = {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
