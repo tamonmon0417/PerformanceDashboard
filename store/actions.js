@@ -9,17 +9,10 @@ export default {
     commit('users', { value: data })
   },
 
-  async postUser ({ state, dispatch }) {
-    const newUsers = state.users.filter((users) => {
-      return !users._id
-    })
-    await newUsers.forEach(async (u) => {
-      await axios.post('http://localhost:3000/user', {
-        name: u.name,
-        type: u.type,
-        performanceList: u.performanceList,
-        assignedList: u.assignedList
-      })
+  async postUser ({ state, dispatch }, { value }) {
+    const { user } = value
+    await axios.post('http://localhost:3000/user', {
+      user
     })
     await dispatch('getAllUser')
   },

@@ -21,7 +21,7 @@
                 large
                 color="blue"
                 icon
-                @click="dialogTrigger(employee)"
+                @click="editUser(employee)"
               >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
@@ -43,6 +43,17 @@
     <template v-else-if="isLoaded">
       no employee data
     </template>
+    <v-btn
+      color="pink"
+      dark
+      top
+      right
+      fab
+      class="mr-10 mt-12"
+      @click="addUser()"
+    >
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
     <v-dialog v-model="dialog" max-width="1000px" persistent>
       <v-card>
         <v-card-text>
@@ -155,10 +166,14 @@ export default {
         _id: null,
         name: null,
         type: null,
-        performanceList: [], // includes score and feedback
+        performanceList: [
+          {
+            score: null,
+            feedback: null
+          }
+        ], // includes score and feedback
         assignedList: []
-      },
-      index: -1
+      }
     },
     performance: {
       score: null,
@@ -179,7 +194,12 @@ export default {
       return {
         name: null,
         type: null,
-        performanceList: [], // includes score and feedback
+        performanceList: [
+          {
+            score: null,
+            feedback: null
+          }
+        ], // includes score and feedback
         assignedList: []
       }
     }
@@ -204,24 +224,35 @@ export default {
     addPerformance () {
       this.userForm.content.performanceList.push(JSON.parse(JSON.stringify(this.performance)))
     },
-    dialogTrigger (employee) {
+    addUser () {
+      this.updateOtherEmployeeNameList(this.userForm.content._id)
+      this.dialog = true
+    },
+    editUser (employee) {
       this.userForm.content = JSON.parse(JSON.stringify(employee))
       this.updateOtherEmployeeNameList(this.userForm.content._id)
       this.dialog = true
     },
     async save () {
-      await this.$store.dispatch('patchUser', {
-        value: {
-          user: this.userForm.content
-        }
-      })
+      if (this.userForm.content._id) {
+        await this.$store.dispatch('patchUser', {
+          value: {
+            user: this.userForm.content
+          }
+        })
+      } else {
+        await this.$store.dispatch('postUser', {
+          value: {
+            user: this.userForm.content
+          }
+        })
+      }
       this.close()
     },
     close () {
       this.dialog = false
       setTimeout(() => {
-        this.userForm.content = { ...this.defaultContent }
-        this.userForm.index = -1
+        this.userForm.content = JSON.parse(JSON.stringify(this.defaultContent))
       }, 300)
     },
     async deleteUser (_id) {

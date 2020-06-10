@@ -17,20 +17,9 @@ router.get('/:userID', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const {
-    name,
-    type,
-    performanceList,
-    assignedList
-  } = req.body
-  const user = new User({
-    name,
-    type,
-    performanceList,
-    assignedList
-  })
-
-  const savedUser = await user.save()
+  const { user } = req.body
+  const newUser = new User(user)
+  const savedUser = await newUser.save()
   res.json(savedUser)
 })
 
