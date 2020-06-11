@@ -3,6 +3,8 @@
 ## Build Setup
 
 ```bash
+# Please configure your mongoDB
+
 # install dependencies
 $ yarn install
 
