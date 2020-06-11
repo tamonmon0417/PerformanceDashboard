@@ -5,7 +5,7 @@ const UserSchema = new Schema({
   name: String,
   type: String,
   performanceList: Array, // includes score and feedback
-  assignedList: Array
+  accessibleList: Array
 })
 
 module.exports = mongoose.model('User', UserSchema)

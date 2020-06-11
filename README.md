@@ -36,12 +36,12 @@ Day 1
 
 - Admin view
   - [x] Add/remove/update/view employees
-  - [x] Add/update/view performance reviews
-  - [x] Assign employees to participate in another employee's performance review
+  - [ ] Add/update/view performance reviews
+  - [ ] Assign employees to participate in another employee's performance review
 
 - Employee view
-  - [x] List of performance reviews requiring feedback
-  - [x] Submit feedback
+  - [ ] List of performance reviews requiring feedback
+  - [ ] Submit feedback
 
 Day 2
 
@@ -49,11 +49,12 @@ Day 2
 
 ## TODO (Optional)
 
-- [ ] Implement Auth
+- [ ] Implement Authentication
 - [ ] Deploy on server
 - [ ] Validation
 - [ ] Error Handling
-- [ ] 
+- [ ] Integration Test
+- [ ] GraphQL
 
 ---
 Below is requirement.

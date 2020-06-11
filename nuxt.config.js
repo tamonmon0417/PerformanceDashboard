@@ -105,5 +105,23 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'error',
+        path: '*',
+        component: resolve(__dirname, 'layouts/error.vue')
+      }, {
+        path: '/employee/:employeeName',
+        component: resolve(__dirname, 'pages/index.vue'),
+        name: 'employee'
+      },
+      {
+        path: '/',
+        component: resolve(__dirname, 'pages/index.vue'),
+        name: 'admin'
+      })
+    }
   }
 }

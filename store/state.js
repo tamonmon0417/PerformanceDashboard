@@ -10,7 +10,7 @@ export default () => {
             feedback: null
           }
         ],
-        assignedList: []
+        accessibleList: []
       }
     ]
   }

@@ -3,7 +3,7 @@
     <v-app-bar
       app
     >
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="text-decoration-none" @click="goTop()" v-text="title" />
       <v-spacer />
     </v-app-bar>
     <v-content>
@@ -24,6 +24,14 @@ export default {
   data () {
     return {
       title: 'Dashboard'
+    }
+  },
+  computed: {
+
+  },
+  methods: {
+    goTop () {
+      this.$router.push({ path: '/' })
     }
   }
 }

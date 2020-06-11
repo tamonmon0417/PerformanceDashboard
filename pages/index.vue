@@ -1,13 +1,15 @@
 <template>
   <v-container fluid>
     <template v-if="isLoaded && hasEmployee">
+      <h1 class="display-2">
+        {{ pageTitle }}
+      </h1>
       <v-row>
         <v-col>
           <v-card v-for="employee in employeeList" :key="employee._id" class="mb-10">
-            <v-card-title class="headline">
-              Name: {{ employee.name }}
+            <v-card-title class="headline" @click="goEmployee(employee.name)">
+              {{ employee.name }}
             </v-card-title>
-
             <v-data-table
               :headers="headers"
               :items="employee.performanceList"
@@ -44,6 +46,8 @@
       no employee data
     </template>
     <v-btn
+      v-if="isLoaded"
+      v-show="!isEmployee"
       color="pink"
       dark
       top
@@ -64,12 +68,13 @@
                 v-model="userForm.content.name"
                 dense
                 outlined
+                :disabled="isEmployee"
               />
             </v-col>
             <v-col v-if="otherEmployeeNameList.length" cols="12" sm="6" md="6">
-              <label>Assigned Members</label>
+              <label>Accessible Performance List</label>
               <v-select
-                v-model="userForm.content.assignedList"
+                v-model="userForm.content.accessibleList"
                 :items="otherEmployeeNameList"
                 item-text="name"
                 return-object
@@ -77,6 +82,7 @@
                 multiple
                 dense
                 outlined
+                :disabled="isEmployee"
               />
             </v-col>
           </v-row>
@@ -93,6 +99,7 @@
                   <td>
                     <v-text-field
                       v-model="performance.score"
+                      :disabled="isEmployee"
                       class="mt-5"
                       dense
                     />
@@ -100,6 +107,7 @@
                   <td>
                     <v-text-field
                       v-model="performance.feedback"
+                      :disabled="!isEmployee"
                       class="mt-5"
                       dense
                     />
@@ -110,6 +118,7 @@
           </v-data-table>
           <div class="flex-grow-1" />
           <v-btn
+            v-show="!isEmployee"
             class="mr-1"
             color="blue"
             dark
@@ -151,7 +160,7 @@ export default {
     isLoaded: false,
     headers: [
       {
-        text: 'score',
+        text: 'reviews',
         align: 'left',
         value: 'score'
       },
@@ -171,8 +180,8 @@ export default {
             score: null,
             feedback: null
           }
-        ], // includes score and feedback
-        assignedList: []
+        ],
+        accessibleList: []
       }
     },
     performance: {
@@ -184,8 +193,24 @@ export default {
   }),
   computed: {
     employeeList () {
-      // TODO only employee
-      return this.$store.state.users
+      if (this.isEmployee) {
+        const user = this.$store.state.users.filter((u) => {
+          return u.name === this.employeeName
+        })
+        const myAcessibleList = user[0].accessibleList
+
+        const readableEmployees = [user[0]]
+        myAcessibleList.forEach((item) => {
+          this.$store.state.users.forEach((user) => {
+            if (user._id === item._id) {
+              readableEmployees.push(user)
+            }
+          })
+        })
+        return readableEmployees
+      } else {
+        return this.$store.state.users
+      }
     },
     hasEmployee () {
       return this.employeeList.length
@@ -200,8 +225,17 @@ export default {
             feedback: null
           }
         ],
-        assignedList: []
+        accessibleList: []
       }
+    },
+    employeeName () {
+      return this.$route.params.employeeName
+    },
+    isEmployee () {
+      return !!this.$route.params.employeeName
+    },
+    pageTitle () {
+      return this.employeeName ? `I'm ${this.employeeName}` : 'Admin View'
     }
   },
   async created () {
@@ -261,6 +295,9 @@ export default {
           _id
         }
       })
+    },
+    goEmployee (employeeName) {
+      this.$router.push({ path: `/employee/${employeeName}` })
     }
   }
 }
