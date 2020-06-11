@@ -1,6 +1,6 @@
 # Full Stack Developer Challenge
 
-
+![alt text](/static/demo.png)
 
 ## Build Setup
 
