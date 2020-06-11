@@ -3,6 +3,7 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -14,6 +15,7 @@ db.on('error', console.error.bind(console, 'DB connection error:'))
 db.once('open', () => console.log('DB connection successful'))
 
 const userRouter = require('./routes/user')
+app.use(cors())
 app.use('/user', userRouter)
 
 async function start () {
