@@ -23,7 +23,7 @@
 export default {
   data () {
     return {
-      title: 'Dashboard'
+      title: 'Dashboard (Please click here)'
     }
   },
   computed: {

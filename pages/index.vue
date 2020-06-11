@@ -8,7 +8,7 @@
         <v-col>
           <v-card v-for="employee in employeeList" :key="employee._id" class="mb-10">
             <v-card-title class="headline" @click="goEmployee(employee.name)">
-              {{ employee.name }}
+              {{ `${employee.name} (Please click here)` }}
             </v-card-title>
             <v-data-table
               :headers="headers"
@@ -235,7 +235,7 @@ export default {
       return !!this.$route.params.employeeName
     },
     pageTitle () {
-      return this.employeeName ? `I'm ${this.employeeName}` : 'Admin View'
+      return this.employeeName ? `I'm ${this.employeeName}` : 'Admin View - TOP'
     }
   },
   async created () {

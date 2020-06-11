@@ -1,6 +1,5 @@
 # Full Stack Developer Challenge
 
-
 ## Build Setup
 
 ```bash
@@ -20,15 +19,12 @@ $ yarn generate
 
 ## Architecture
 - Backend: Express.js
-- Frontend: Nuxt SSR (Universal) as module of Express.js
+- Frontend: Nuxt SSR mode (Universal)
 - DB: MongoDB
 - UI Framework: Vuetify
 - Code Formatter: ESLint
-- CI: Husky, Lintstaged
-
-## File Structure
-
-## Feature
+- CI: Husky, Lint-staged
+- Test: Jest
 
 ## TODO (Must)
 
@@ -36,14 +32,14 @@ Day 1
 
 - Admin view
   - [x] Add/remove/update/view employees
-  - [ ] Add/update/view performance reviews
-  - [ ] Assign employees to participate in another employee's performance review
-
-- Employee view
-  - [ ] List of performance reviews requiring feedback
-  - [ ] Submit feedback
+  - [x] Add/update/view performance reviews
+  - [x] Assign employees to participate in another employee's performance review
 
 Day 2
+
+- Employee view
+  - [x] List of performance reviews requiring feedback
+  - [x] Submit feedback
 
 - [ ] Unit Test
 
@@ -51,10 +47,11 @@ Day 2
 
 - [ ] Implement Authentication
 - [ ] Deploy on server
-- [ ] Validation
+- [ ] Validation (especially unique name)
 - [ ] Error Handling
 - [ ] Integration Test
 - [ ] GraphQL
+- [ ] Pretty CSS
 
 ---
 Below is requirement.
