@@ -1,6 +1,0 @@
-PATCH http://127.0.0.1:3000/user/5edf757eec5bfb339515cf96
-Content-Type: application/json
-
-{
-    "age": 2
-}

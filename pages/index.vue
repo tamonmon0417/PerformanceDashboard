@@ -107,7 +107,7 @@
                   <td>
                     <v-text-field
                       v-model="performance.feedback"
-                      :disabled="!isEmployee"
+                      :disabled="!isEmployee || !isMyData(userForm.content.name)"
                       class="mt-5"
                       dense
                     />
@@ -298,6 +298,9 @@ export default {
     },
     goEmployee (employeeName) {
       this.$router.push({ path: `/employee/${employeeName}` })
+    },
+    isMyData (name) {
+      return this.employeeName === name
     }
   }
 }
